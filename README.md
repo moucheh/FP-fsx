@@ -24,3 +24,11 @@ Za koristenje prethodne komande, potreban je alat git, koji je moguce preuzeti p
 Azuriranje repozitorija je moguce komandom (terminal mora biti otvoren u direktoriju u kojem je repozitorij sacuvan):
 
     git pull
+
+Pokretanje repl okruzenja za F# moguce je komandom
+    
+    dotnet fsi
+
+Takodjer je moguce u istoj komandi proslijediti fajl s ekstenzijom .fsx ili .fs, npr.
+
+    dotnet fsi p1.fsx
