@@ -1,13 +1,10 @@
+// pokrenuti sa dotnet fsi requesting_user_input.fsx
+
 printfn "Enter a number"
 
 let x = 
   let input = System.Console.ReadLine() in
     int32 input
-
-(*    
-let x = System.Console.ReadLine() in
-  int32 x
-*)
 
 let square y = y * y
 
