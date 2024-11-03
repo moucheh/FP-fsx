@@ -6,6 +6,9 @@ let convertToBAM (exchangeRate : float) : (float -> float) =
     // Vaš kod ovdje
     let apply x = x * exchangeRate
     apply
+    // potrebno je ovaj dio implementirati bez koristenja kljucne rijeci fun,
+    // simbol apply je tipa float -> float stoga, samo vratimo njegovu vrijednost
+    // u expr2 od let izraza za definiciju apply simbola (funkcije)
 
 // 2. Implementirati funkciju popusta (closure)
 let applyDiscount (discountRate : float) : (float -> float) =

@@ -5,6 +5,7 @@ let format name age = sprintf $"{name} ima {age} godina."
 
 let formattedPeople = people |> 
                       List.map ( fun x -> x ||> format )
+                      // trebalo je promjeniti |> u ||>
 
 formattedPeople |> List.iter (printfn "%s")
 
