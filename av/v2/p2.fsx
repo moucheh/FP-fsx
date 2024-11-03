@@ -8,5 +8,7 @@ let square x = x * x
 let inc x = x + 1
 
 
-let res = inc <| square num
+let res = inc (square num) 
+// let res = square num |> inc
+// let res = inc <| square num
 printfn "%d" res
