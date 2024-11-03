@@ -5,6 +5,7 @@
 // let rec sum x =
 //   match x with
 //   | 0 -> 0
+//   | _ -> x + sum ( x - 1 )
 // printfn $"Sum of first 10 natrual numbers is {sum 10}"
 
 // tail recursion
