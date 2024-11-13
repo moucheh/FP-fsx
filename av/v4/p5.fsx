@@ -73,8 +73,7 @@ let parsirajDatum ( datum : string) =
   | _ -> failwith "Nevalidan datum"
 parsirajDatum
 
-let ispisi_datum { dan = d; mjesec = m; godina = g } =
-  let Mjesec = function
+let ispisi_mjesec = function
     | 1 -> "Januar"
     | 2 -> "Februar"
     | 3 -> "Mart"
@@ -88,7 +87,10 @@ let ispisi_datum { dan = d; mjesec = m; godina = g } =
     | 11 -> "Novembar"
     | 12 -> "Decembar"
     | _ -> "Mjesec ne postoji"
-  sprintf $"{d}. {Mjesec m}, 20{g}."
+
+let ispisi_datum { dan = d; mjesec = m; godina = g } =
+  
+  sprintf $"{d}. {ispisi_mjesec m}, 20{g}."
 ispisi_datum
 
 let parsirajPadavine ( padavine : string ) : Padavine =
@@ -132,4 +134,37 @@ printfn $"Na dan {ispisi_datum najveca_temperatura.datum} je najveca temperatura
 let najmanja_temperatura = podaci |> List.minBy (fun x -> x.tmin)
 printfn $"Na dan {ispisi_datum najmanja_temperatura.datum} je najmanja temperatura bila {najmanja_temperatura.tmin}"
 
-// ostatak dolazi
+let prosjecna_temperatura = podaci |> List.averageBy (fun x -> x.tavg) 
+printfn $"Prosjecna temperatura u toku godine iznosi {prosjecna_temperatura} C"
+
+let prosjecno_odstupanje = podaci |> List.averageBy (fun x -> x.departure)
+printfn $"Prosjecno odstupanje u toku godine iznosi {prosjecno_odstupanje}"
+
+let najvece_temperaturno_odstupanje = 
+  podaci |> List.maxBy (fun x -> if x.departure > 0. then x.departure else -x.departure)
+printfn $"Najvece apsolutno odstupanje iznosi {najvece_temperaturno_odstupanje.departure} na dan {ispisi_datum najvece_temperaturno_odstupanje.datum}"
+
+let matchPadavine x = 
+  match x.snow_depth with
+  | Zanemarivo -> 0.
+  | Nikako -> 0.
+  | Kolicina k -> k
+matchPadavine
+
+let najvise_snijega = podaci |> List.maxBy matchPadavine 
+printfn $"Najvise snijega je palo na dan {ispisi_datum najvise_snijega.datum} i to {najvise_snijega.new_snow} cm"
+
+let najdublji_snijeg = podaci |> List.maxBy matchPadavine
+printfn $"Najdublji snijeg je bio na dan {ispisi_datum najdublji_snijeg.datum} i to dubine {najdublji_snijeg.snow_depth} cm"
+
+let najvisa_prosjecna = podaci |> List.maxBy (fun x -> x.tavg)
+printfn $"Najvisa prosjecna temperatura je bila u {ispisi_mjesec najvisa_prosjecna.datum.mjesec} i to {najvisa_prosjecna.tavg} C"
+
+let najniza_prosjecna = podaci |> List.minBy (fun x -> x.tavg)
+printfn $"Najniza prosjecna temperatura je bila u {ispisi_mjesec najniza_prosjecna.datum.mjesec} i to {najniza_prosjecna.tavg} C"
+
+let najvisi_prosjek_neophodne_energije = podaci |> List.maxBy (fun x -> (x.hdd + x.cdd) / 2.) 
+printfn $"Najvisi estimirani prosjek neophodne energije je bio u {ispisi_mjesec najvisi_prosjek_neophodne_energije.datum.mjesec}"
+
+let najveca_temperaturna_razlika = podaci |> List.maxBy (fun x -> x.tmax - x.tmin)
+printfn $"Najvisa temperaturna razlika je bila na dan {ispisi_datum najveca_temperaturna_razlika.datum} i to {najveca_temperaturna_razlika.tmax - najveca_temperaturna_razlika.tmin} C"
