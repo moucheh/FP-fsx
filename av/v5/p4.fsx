@@ -29,13 +29,39 @@ let (<) bt v = push v bt
 
 let bst = End < 10 < 9 < 11 < 3 < 4 < 15 < 13 < 5
 
-let rec traverse (f : 'a -> unit) (bt : BinaryTree<'a>) =
+let rec traverseInOrder (f : 'a -> unit) (bt : BinaryTree<'a>) =
   match bt with 
   | End -> () 
   | Node (value, left, right) ->
-    traverse f left
+    traverseInOrder f left
     f value
-    traverse f right
+    traverseInOrder f right
    
-traverse (printf "%A ") bst
+
+let rec traversePreOrder (f : 'a -> unit) (bt : BinaryTree<'a>) =
+  match bt with 
+  | End -> () 
+  | Node (value, left, right) ->
+    f value
+    traversePreOrder f left
+    traversePreOrder f right
+
+let rec traversePostOrder (f : 'a -> unit) (bt : BinaryTree<'a>) =
+  match bt with 
+  | End -> () 
+  | Node (value, left, right) ->
+    traversePostOrder f left
+    traversePostOrder f right
+    f value
+
+printfn"Prolazak u in order redoslijedu: "
+traverseInOrder (printf "%A ") bst
+printfn ""
+
+printfn "Prolazak u post order redoslijedu: "
+traversePostOrder (printf "%A ") bst
+printfn ""
+
+printfn "Prolazak u pre order redoslijedu: "
+traversePreOrder (printf "%A ") bst
 printfn ""
