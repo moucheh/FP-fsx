@@ -51,8 +51,8 @@ let rec sort (f : 'a -> 'a -> bool) (l : List<'a>) : List<'a> =
     match l with
     | End -> End
     | Node (x, xs) ->
-        let falsy = filter (fun y -> f x y) xs
-        let truthy = filter (fun y -> f y x ) xs
+        let falsy = filter (fun y -> f y x) xs
+        let truthy = filter (fun y -> f x y ) xs
         sort f falsy @@ Node (x, End) @@ sort f truthy 
 
 let lst = Node (1, Node (7, Node (2, Node (6, Node (3, Node (4, End))))))
@@ -74,7 +74,7 @@ printfn "lst2:"
 printList lst2
 
 printfn "Sortirana lista lst:"
-lst |> sort (fun y x -> x < y) |> printList
+lst |> sort (fun x y -> x < y) |> printList
 
 printfn "Lista lst u kojoj su samo parni brojevi"
 lst |> filter (fun x -> x % 2 = 0) |> printList 
