@@ -14,20 +14,31 @@ type List<'a> =
 | End
 | Node of 'a * List<'a> 
 
+let rec foldl (f : 'a -> 'b -> 'a) (a : 'a) (l : List<'b>) : 'a =
+    match l with
+    | End -> a
+    | Node (x, xs) -> foldl f (f a x) xs
+
+let reverse (l : List<'a>) : List<'a> =
+  foldl (fun a e -> Node (e, a)) End l
+
 let head l =
   match l with
   | End -> System.Exception "Prazna lista" |> raise 
   | Node (x, xs) -> x
 
 let tail l =
-  match l with
+  match reverse l with
   | End -> System.Exception "Prazna lista." |> raise
-  | Node (x, xs) -> xs
+  | Node (x, xs) -> x
 
-let rec foldl (f : 'a -> 'b -> 'a) (a : 'a) (l : List<'b>) : 'a =
-    match l with
-    | End -> a
-    | Node (x, xs) -> foldl f (f a x) xs
+let foldr (f : 'a -> 'b -> 'b) (a : 'b) (l : List<'a>) : 'b =
+  let reversed = reverse l
+  let rec foldr' f' a' l' =
+    match l' with
+    | End -> a'
+    | Node (x, xs) -> foldr' f' (f' x a') xs
+  foldr' f a reversed
 
 let pushFront e l =
     Node (e, l)
@@ -40,13 +51,34 @@ let rec append a b =
     | Node (x, xs) ->
         Node (x, append xs b)
 
+let take (n : int) (l : List<'a>) : List<'a> =
+  let rec loop a n' l' =
+    match (n', l') with
+    | (0, _) -> a
+    | (_, End) -> End
+    | (n'', Node (x, xs)) -> loop ( Node (x, a) ) (n'' - 1) xs
+  loop End n l |> reverse
+
+let rec drop (n : int) (l : List<'a>) : List<'a> =
+  match (n, l) with
+  | (0, xs) -> xs
+  | (_, End) -> End
+  | (n', Node (x, xs)) -> drop (n' - 1) xs
+
 let rec filter (f : 'a -> bool)  (l : List<'a>) =
     match l with
     | End -> End
     | Node (x, xs) when f x -> Node (x, filter f xs)
     | Node (x, xs) -> filter f xs 
 
+let rec zip (l1 : List<'a>) (l2 : List<'b>) : List<('a * 'b)> =
+  match (l1, l2) with
+  | (_, End) -> End
+  | (End, _) -> End
+  | (Node (x1, xs1), Node (x2, xs2)) -> Node ((x1, x2), zip xs1 xs2)
+
 let (@@) = append
+
 let rec sort (f : 'a -> 'a -> bool) (l : List<'a>) : List<'a> =
     match l with
     | End -> End
