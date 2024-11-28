@@ -27,7 +27,7 @@ let rec push v bt =
 
 let (<) bt v = push v bt
 
-let bst = End < 10 < 9 < 11 < 3 < 4 < 15 < 13 < 5
+let bst = End < 10 < 9 < 11 < 3 < 4 < 15 < 13 < 5 < 8
 
 let rec traverseInOrder (f : 'a -> unit) (bt : BinaryTree<'a>) =
   match bt with 
@@ -65,3 +65,14 @@ printfn ""
 printfn "Prolazak u pre order redoslijedu: "
 traversePreOrder (printf "%A ") bst
 printfn ""
+
+let rec nodeCount bt =
+  match bt with
+  | End -> 0
+  | Node (value, End, End) -> 1
+  | Node (value, left, End) -> 1 + nodeCount left
+  | Node (value, End, right) -> 1 + nodeCount right
+  | Node (value, left, right) -> 1 + nodeCount left + nodeCount right
+
+nodeCount bst |> printfn "Node count: %d"
+
