@@ -5,9 +5,9 @@
 // Napisati funkcije obim i povrsina koje izracunavaju obim i povrsinu oblika.
 
 type Oblik =
-    | Krug of resultMul : double
-    | Kvadrat of a : double
-    | Pravougaonik of a : double * b : double
+    | Krug of double
+    | Kvadrat of double
+    | Pravougaonik of double * double
 
 let Obim oblik =
     match oblik with
