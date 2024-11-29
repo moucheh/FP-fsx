@@ -4,7 +4,7 @@
 // |  _||_      _|
 // |_|    |_||_|
 //
-// Prvojera 2
+// Provjera 2
 //
 // 1. a
 type Date =
