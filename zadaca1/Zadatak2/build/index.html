@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calculator</title>
+    <style>
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        width: 500px; 
+        gap: 1rem;
+        margin: auto;
+        border: .25rem black solid;
+        padding: .5em;
+        border-radius: 1.25em
+      }
+
+      .display {
+        grid-column: span 4;
+        text-align: right;
+        font-size: 4rem;
+        height: 80px;
+        padding: .25em;
+        background-color: rgb(200 200 200);
+        border-radius: .75rem
+      }
+
+      .number, .operation {
+        aspect-ratio: 1;
+        font-size: 3.25rem;
+        border-radius: 100vw;
+        border: none;
+        cursor: pointer
+      }
+
+      .number {
+        background-color: rgb(100 150 200);
+        color: #fff;
+        transition: 
+          box-shadow 200ms ease-in,
+          color 200ms ease-in,
+          background-color 200ms ease-in;
+      }
+
+      .number:hover {
+        background-color: #fff;
+        color: rgb(100 150 200);
+        box-shadow: 0px 0px 10px black
+
+      } 
+
+      .operation {
+        background-color: rgb(200 100 100);
+        transition: 
+          box-shadow 200ms ease-in,
+          color 200ms ease-in,
+          background-color 200ms ease-in;
+      }
+
+      .operation:hover {
+        color: rgb(200 100 100);
+        background-color: black
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/Program.js"></script>
+  </body>
+</html>
