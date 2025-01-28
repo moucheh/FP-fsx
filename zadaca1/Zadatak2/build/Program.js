@@ -83,7 +83,7 @@ export function calculate(state, op) {
 
 export function appendDigit(digit, state) {
     if (state.firstOperandEntered) {
-        if ((state.secondOperand.length + 1) > 11) {
+        if ((state.secondOperand.length + 1) > 10) {
             return state;
         }
         else if ((state.secondOperand === "0") ? true : (state.secondOperand === "")) {

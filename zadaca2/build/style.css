@@ -1,0 +1,423 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Roboto", Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100vh;
+  background-image: linear-gradient(45deg, green, cyan, blue);
+}
+
+h1 {
+  margin: 0;
+  padding: 0;
+  font-weight: 900;
+  color: white;
+  text-shadow: 1px 1px 5px black;
+  position: absolute;
+  top: 1rem;
+}
+
+a {
+  text-decoration: none;
+  color: white;
+}
+
+a:visited {
+  color: white;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: .5rem;
+  margin-bottom: 10px;
+}
+
+.title {
+  grid-column: span 4;
+  margin: 0;
+  padding: 0;
+  background-color: white;
+  height: 160px;
+  display: flex;
+  justify-content: center;
+  border-radius: .75rem;
+  flex-direction: column;
+  align-items: center;
+  width: calc(200px * 4 + 3 * .5rem);
+  animation: 1s slideIn forwards;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.subtitle {
+  margin-top: .5em;
+  font-size: 1.05rem;
+  font-weight: 400;
+}
+
+.card {
+  width: 200px;
+  height: 160px;
+  background-color: white;
+  border-radius: .75rem;
+  border-width: 4px;
+  border-color: transparent;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  border-style: solid;
+  transform: scale(1);
+  transition: transform 200ms ease-in;
+}
+
+.card:hover {
+  cursor: pointer;
+  transform: scaleX(1.025);
+  transform: scaleY(1.055);
+  outline: 3px solid black 
+}
+
+.card img {
+  height: 100%;
+  width: auto;
+}
+
+.card-hidden {
+  display: none;
+}
+
+.shake-card {
+  border-color: red;
+  animation: shake 1s 0s linear forwards;
+}
+
+.selected-card {
+  border-color: blue;
+}
+
+.guessed-card {
+  border-color: green;
+  display: none;
+}
+
+.disabled {
+  pointer-events: none;
+}
+
+.game-won {
+  position: fixed;
+  z-index: 1000;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); 
+  background-image: url("img/fireworks2.gif");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  animation: 10s vanish forwards 10s;
+}
+
+.game-won p {
+  text-shadow: 1px 1px 5px black;
+  color: white;
+  font-size: 5rem;
+  animation: 10s winnerWinnerChickenDinner forwards;
+}
+
+.game-over {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  font-size: 5rem;
+  padding: 1.5em;
+  text-shadow: 1px 1px 5px white;
+  background-color: rgba(255 255 255 / 80);
+  background-image: url("img/dunce.png");
+  background-repeat: no-repeat;
+  background-position: bottom left;
+  background-size: 35%;
+  border-radius: .75rem;
+  border: 3px solid black;
+  animation: 2s dunce forwards;
+}
+
+.one-away {
+  font-size: 1.25rem;
+  margin: 0;
+  padding: .5em;
+  color: white;
+  text-shadow: 1px 1px 2px black;
+  opacity: 0;
+  animation: 2s dropIn forwards;
+}
+
+.one-away-placeholder {
+  font-size: 1.25rem;
+  margin: 0;
+  padding: .5em;
+  color: white;
+  text-shadow: 1px 1px 2px black;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.mistakes-indicator {
+  margin: 0;
+  padding: .15em;
+  pointer-events: none;
+}
+
+.dots {
+  display: flex;
+  gap: .35rem;
+  justify-content: center; 
+  align-items: center;
+  min-height: 10px;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: .15em;
+  background-color: black;
+  transform: rotate(45deg);
+  animation: 1s appearAndRotate forwards;
+}
+
+.button-container {
+  display: flex;
+  gap: .35em;
+}
+
+.button {
+  padding: .25em .5em;
+  border: none;
+  border-radius: 100vw;
+  transform: translateY(0);
+  transform: scaleX(1);
+  transition: transform 200ms ease-in;
+  cursor: pointer;
+}
+
+.button:hover {
+  transform: translateY(-4px);
+  transform: scaleX(1.05)
+}
+
+@keyframes slideIn {
+  0% {
+    transform: scaleX(0)
+  }
+
+  50% {
+    transform: scaleX(0.5)
+  }
+
+  100% {
+    transform: scaleX(1)
+  }
+}
+
+@keyframes shake {
+  0% {
+    transform: translate(0px);
+  }
+
+  50% {
+    transform: translate(0px);
+  }
+
+  66% {
+    transform: translateX(-30px);
+  }
+
+  75% {
+    transform: translateX(30px);
+  }
+
+  85% {
+    transform: translateX(-30px);
+  }
+
+  95% {
+    transform: translateX(30px);
+  }
+
+  100% {
+    transform: translateX(0px);
+  }
+}
+
+@keyframes appearAndRotate {  
+  0% {
+    opacity: 0;
+    transform: rotate(0);
+  }
+
+  50% {
+    opacity: 0.5;
+    transform: rotate(-180deg);
+  }
+
+  100% {
+    opacity: 1;
+    transform: rotate(45deg);
+  }
+}
+
+@keyframes dropIn {
+  0% {
+    transform: translateY(-1000px);
+    transform: translateX(0);
+    opacity: 0;
+  }
+
+  25% {
+    transform: translateY(-20px);
+    transform: translateX(-20px);
+    opacity: 0.5;
+    color: gray;
+  }
+
+  37% {
+    transform: translateY(-5px);
+    transform: translateX(20px);
+    opacity: 0.75;
+    color: red;
+  } 
+
+  50% {
+    transform: translateY(-5px);
+    transform: translateX(0);
+    opacity: 1;
+    color: red;
+  }
+
+  75% {
+    transform: translateY(-5px);
+    transform: translateX(200px);
+    opacity: 0.5;
+    color: red;
+  }
+
+  100% {
+    transform: translateY(0);
+    transform: translateX(1000px);
+    opacity: 0;
+    color: white;
+  }
+}
+
+@keyframes dunce {
+  0% {
+    transform: rotate(45deg);
+  }
+
+  25% {
+    transform: rotate(-180deg);
+  }
+
+  50% {
+    transform: rotate(-45deg);
+  }
+
+  75% {
+    transform: rotate(180deg);
+  }
+
+  100% {
+    rotate: 0;
+  }
+}
+
+@keyframes winnerWinnerChickenDinner {
+  0% {
+    transform: translateX(0);
+    transform: translateY(1000px)
+  }
+
+  25% {
+    transform: translateY(0);
+    transform: rotate(0);
+  }
+
+  50% {
+    rotate: 360deg;    
+  } 
+
+  75% {
+    rotate: 0;
+  } 
+
+  80% {
+    translate: -45px; 
+  }
+  
+  83% {
+    translate: -20px
+  }
+  
+  85% {
+    translate: 20px;
+  }
+
+  87% {
+    translate: -20px;
+  }
+
+  90% {
+    translate: 0px;
+  }
+  
+  93% {
+    translate: 20px;
+  }
+  
+  95% {
+    translate: 45px;
+  }
+
+  98% {
+    translate: -20px;
+  }
+  
+  100% {
+    translate: 0;
+  }
+}
+
+@keyframes vanish {
+  0% {
+    opacity: 1;
+  } 
+
+  100% {
+    opacity: 0;
+    visibility: hidden;
+    display: none;  
+  }
+}
